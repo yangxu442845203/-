@@ -112,7 +112,9 @@ class AdminuserController extends Controller
      */
     public function edit($id)
     {
-        //
+        //获取需要修改的数据
+        $users=DB::table("admin_users")->where("id","=",$id)->first();
+        return view("Admin.Adminuser.edit",['users'=>$users]);
     }
 
     /**
@@ -124,7 +126,13 @@ class AdminuserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //获取修改数据
+        $data=$request->except(['_token','_method']);
+        if(DB::table("admin_users")->where("id","=",$id)->update($data)){
+            return redirect("/adminusers")->with("success","修改成功");
+        }else{
+            return back()->with("error","修改失败");
+        }
     }
 
     /**
@@ -135,6 +143,11 @@ class AdminuserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //管理员删除
+        if(DB::table("admin_users")->where("id","=",$id)->delete()){
+            return redirect("/adminusers")->with("success","删除成功");
+        }else{
+            return redirect("/adminusers")->with("error","删除失败");
+        }
     }
 }

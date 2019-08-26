@@ -50,6 +50,9 @@ class HomeLoginController extends Controller
                 // echo "ok";
                 //检测用户是否激活
                 if($info->status=='激活'){
+                	//把登录的名字存储在session里
+                	 session(['email'=>$email]);
+                	 session(['user_id'=>$info->id]);
                     return redirect("/homeindex");
                 }else{
                     return back()->with("error","用户还没有激活");
@@ -160,11 +163,6 @@ class HomeLoginController extends Controller
         if(User::where("id","=",$id)->update($data)){
             return redirect("/homelogin/create");
         }
-     }
-
-     public function qqq()
-     {
-     	echo "123";
      }
 
 

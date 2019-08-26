@@ -30,14 +30,14 @@
       <tbody role="alert" aria-live="polite" aria-relevant="all">
         @foreach($data as $row)
        <tr class="odd"> 
-        <td class="  sorting_1"><input type="checkbox" value="{{$row->id}}"></td> 
-        <td class="  sorting_1">{{$row->id}}</td> 
-        <td class=" ">{{$row->title}}</td> 
-        <td class=" ">{!!$row->descr!!}</td> 
-        <td class=" "><img src="{{$row->thumb}}"></td> 
-        <td class=" ">{{$row->editor}}</td> 
+        <td class="  sorting_1"><input type="checkbox" value="{{$row['id']}}"></td> 
+        <td class="  sorting_1">{{$row['id']}}</td> 
+        <td class=" ">{{$row['title']}}</td> 
+        <td class=" ">{!!$row['descr']!!}</td> 
+        <td class=" "><img src="{{$row['thumb']}}"></td> 
+        <td class=" ">{{$row['editor']}}</td> 
         <td class=" ">
-          <a class="btn btn-info" href="/admincates/{{$row->id}}/edit"><i class="icon-wrench"></i></a></td> 
+          <a class="btn btn-info" href="/adminarticle/{{$row['id']}}/edit"><i class="icon-wrench"></i></a></td> 
        </tr>
        @endforeach
        <tr><td colspan="7"><a href="javascript:void(0)" class="btn btn-success allchoose">全选</a><a href="javascript:void(0)" class="btn btn-success nochoose">全不选</a><a href="javascript:void(0)" class="btn btn-success fchoose">反选</a></td></tr>

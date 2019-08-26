@@ -25,11 +25,11 @@
         <td class=" ">{{$row->name}}</td> 
         <td class=" ">
           <a href="/adminuserrole/{{$row->id}}" class="btn btn-success">分配角色</a>
-        	<form action="/adminuser/{{$row->id}}" method="post">
+        	<form action="/adminusers/{{$row->id}}" method="post">
         		{{csrf_field()}}
         		{{method_field("DELETE")}}
 				<button class="btn btn-success" type="submit"><i class="icon-trash"></i></button>
-        		<a class="btn btn-info" href="/adminuser/{{$row->id}}/edit"><i class="icon-wrench"></i></a></td>
+        		<a class="btn btn-info" href="/adminusers/{{$row->id}}/edit"><i class="icon-wrench"></i></a></td>
         	</form>
        </tr>
        @endforeach

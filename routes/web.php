@@ -43,10 +43,19 @@ Route::group(["middleware"=>"adminlogin"],function(){
 	Route::resource("/adminarticle","Admin\ArticleController");
 	//Ajax 删除
 	Route::get("/articledel","Admin\ArticleController@del");
-	//
+	//商品模块
 	Route::resource("/adminshop","Admin\ShopController");
+	//订单模块
+	Route::resource("/adminperson","Admin\PersonController");
+	//友情链接
+	Route::resource("/adminyouqing","Admin\YouqingController");
+	//轮播图模块
+	Route::resource("/adminlunbotu","Admin\LunbotuController");
 });
 
+
+
+//
 //前台邮件测试 原始字符串
 Route::get("/sendmail","Home\RegisterController@sendmail");
 //前台邮件测试2 发送视图
@@ -77,6 +86,34 @@ Route::post("/doreset","Home\HomeLoginController@doreset");
 //前台首页
 Route::resource("/homeindex","Home\IndexController");
 
+Route::group(["middleware"=>'login'],function(){
+	//购物车
+	Route::resource("/homecart","Home\CartController");
+	//全部删除
+	Route::get("/alldelete","Home\CartController@alldelete");
+	//Ajax的减操作
+	Route::get("/cartupdatee","Home\CartController@cartupdatee");
+	//Ajax的加操作
+	Route::get("/cartupdate","Home\CartController@cartupdate");
+	//勾选购买的商品
+	Route::get("/homecarttot","Home\CartController@homecarttot");
+	//结算操作
+	Route::get("/jiesuan","Home\OrderController@jiesuan");
+	//any 匹配get请求路由或者post请求路由
+	Route::any("/homeorder/insert","Home\OrderController@insert");
+	//获取城市级联数据
+	Route::get("/address","Home\AddressController@address");
+	//插入收货地址
+	Route::post("/addressinsert","Home\AddressController@insert");
+	//选择收货地址
+	Route::get("/choose","Home\AddressController@choose");
+	//下单
+	Route::post("/order/create","Home\OrderController@insertcreate");
+	//支付完毕后跳转的路由
+	//Route::get("/returnurl","Home\OrderController@returnurl");
+	//个人中心
+	Route::resource("/homeperson","Home\PersonController");
+});
 
-// demo
-Route::get("/qqq","Home\HomeLoginController@qqq");
+//退出
+Route::get("/homelogout","Home\IndexController@logout");

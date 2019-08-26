@@ -8,6 +8,7 @@ use Mail;//laravel里把发送邮件的功能封装在Mail类里
 use Gregwar\Captcha\CaptchaBuilder;//导入验证码类库
 use App\Models\HomeRegister;
 use Hash;
+use DB;
 class RegisterController extends Controller
 {
     /**
@@ -116,7 +117,7 @@ class RegisterController extends Controller
                 //调用方法 发送邮件激活当前用户 status 0=>2
                 $res=$this->registermail($id,$data['email'],$data['token']);
                 if($res){
-                    echo "激活用户的邮件已经发送,登录邮箱激活用户";
+                   return redirect('https://mail.qq.com/cgi-bin/loginpage');
                 }else{
                     return back()->with("error","请重新发送邮件,激活用户");
                 }
@@ -193,7 +194,22 @@ class RegisterController extends Controller
     }
      //手机号注册
     public function registerphone(Request $request){
-        dd($request->all());
+     
+      $info = $request->except('_token');
+      $data['phone'] = $request->input('phone');
+      $data['password'] = Hash::make($info['password']);
+      $data['name'] = 'yx'.rand(1,99999);
+      if(empty($data['password'])){
+        return back()->with('error','密码不能为空');
+      }
+      //dd($data);
+       $res = DB::table('admin_users')->insert($data);
+        if($res){   
+            return redirect('http://www.php217.com/homelogin/create')->with('success','注册成功');
+        }else{
+            return back()->with('error','注册失败');
+        }
+
     }
 
     //检测手机号是否唯一

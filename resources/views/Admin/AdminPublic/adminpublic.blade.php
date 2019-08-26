@@ -156,6 +156,20 @@
         <li><a href="/adminshop/create">商品添加</a></li> 
         <li><a href="/adminshop">商品列表</a></li> 
        </ul> </li> 
+       <li> <a href="#"><i class="icon-file"></i> 订单管理</a> 
+       <ul class="closed"> 
+        <li><a href="/adminperson">订单列表</a></li> 
+       </ul> </li>
+       <li> <a href="#"><i class="icon-file"></i> 链接管理</a> 
+       <ul class="closed"> 
+        <li><a href="/adminyouqing/create">链接添加</a></li> 
+        <li><a href="/adminyouqing">链接列表</a></li> 
+       </ul> </li> 
+        <li> <a href="#"><i class="icon-file"></i> 轮播图管理</a> 
+       <ul class="closed"> 
+        <li><a href="/adminlunbotu/create">图片添加</a></li> 
+        <li><a href="/adminlunbotu">图片列表</a></li> 
+       </ul> </li> 
      </ul> 
     </div> 
    </div> 

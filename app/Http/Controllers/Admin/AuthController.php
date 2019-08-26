@@ -66,7 +66,9 @@ class AuthController extends Controller
      */
     public function edit($id)
     {
-        //
+        //获取需要修改的数据
+        $node=DB::table("node")->where("id","=",$id)->first();
+        return view("Admin.Auth.edit",['node'=>$node]);
     }
 
     /**
@@ -78,7 +80,13 @@ class AuthController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //获取修改数据
+        $data=$request->except(['_token','_method']);
+        if(DB::table("node")->where("id","=",$id)->update($data)){
+            return redirect("/auth")->with("success","修改成功");
+        }else{
+            return back()->with("error","修改失败");
+        }
     }
 
     /**
@@ -89,6 +97,11 @@ class AuthController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //权限删除
+        if(DB::table("node")->where("id","=",$id)->delete()){
+            return redirect("/auth")->with("success","删除成功");
+        }else{
+            return back()->with("error","删除失败");
+        }
     }
 }

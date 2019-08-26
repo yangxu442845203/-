@@ -74,6 +74,7 @@ class UserController extends Controller
         //密码加密
         $data['password']=Hash::make($data['password']);
         $data['status']=1; //1 禁用
+        $data['token']=str_random(50);
         //用模型类插入数据
         if(User::create($data)){
         	return redirect("/adminuser")->with("success","添加成功");
@@ -117,13 +118,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
         //获取修改数据
         $data=$request->except(['_token','_method']);
         if(User::where("id","=",$id)->update($data)){
         	return redirect("/adminuser")->with("success","修改成功");
         }else{
-        	return redirect("/adminuser/$id/edit")->with("error","修改成功");
+        	return redirect("/adminuser/$id/edit")->with("error","修改失败");
         }
     }
 
@@ -139,7 +140,7 @@ class UserController extends Controller
         if(User::where("id","=",$id)->delete()){
         	return redirect("/adminuser")->with("success","删除成功");
         }else{
-        	return redirect("/adminuser")->with("success","删除失败");
+        	return redirect("/adminuser")->with("error","删除失败");
         }
     }
 
@@ -152,13 +153,13 @@ class UserController extends Controller
     	return view("Admin.User.info",['info'=>$userinfo]);
     }
 
-    //获取会员的收货地址
-     public function useraddress($id){
-    	//echo $id;
-    	//调用模型类的address
-    	$useraddress = User::find($id)->address;
-    	// dd($useraddress);
-    	//加载视图
-    	return view("Admin.User.address",['address'=>$useraddress]);
-    }
+    // //获取会员的收货地址
+    //  public function useraddress($id){
+    // 	//echo $id;
+    // 	//调用模型类的address
+    // 	$useraddress = User::find($id)->address;
+    // 	// dd($useraddress);
+    // 	//加载视图
+    // 	return view("Admin.User.address",['address'=>$useraddress]);
+    // }
 }

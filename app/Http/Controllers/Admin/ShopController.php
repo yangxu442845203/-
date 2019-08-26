@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Markdown;//导入
+use Config;
+use DB;
 class ShopController extends Controller
 {
     /**
@@ -14,7 +16,11 @@ class ShopController extends Controller
      */
     public function index()
     {
-        //
+        //获取商品的数据
+        // $shop=DB::table("shops")->get();
+        //两表关联
+        $shop=DB::table("shops")->select("cates.id as cid","cates.name as cname","shops.id as sid","shops.name as sname","shops.pic","shops.descr","shops.num","shops.price")->join("cates","shops.cate_id","=","cates.id")->get();
+        return view("Admin.Shop.index",['shop'=>$shop]);
     }
 
     /**
@@ -38,7 +44,27 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        if($request->hasFile("pic")){
+            $name=time();
+            $ext=$request->file("pic")->getClientOriginalExtension();
+            $request->file("pic")->move(Config::get('app.app_upload'),$name.".".$ext);
+        }
+
+        //封装下需要插入的数据
+        $data['name']=$request->input("name");
+        $data['cate_id']=$request->input("cate_id");
+        $data['pic']=trim(Config::get('app.app_upload')."/".$name.".".$ext,".");
+        //通过MarkDown 组件转换为html页面
+        $data['descr']=Markdown::convertToHtml($request->input('descr'));
+        $data['num']=$request->input("num");
+        $data['price']=$request->input("price");
+        // dd($data);
+        if(DB::table("shops")->insert($data)){
+            return redirect("/adminshop")->with("success","添加成功");
+        }else{
+            return back()->with("error","添加失败");
+        }
     }
 
     /**
@@ -60,7 +86,9 @@ class ShopController extends Controller
      */
     public function edit($id)
     {
-        //
+        //获取需要修改的数据
+        $shop=DB::table("shops")->where("id","=",$id)->first();
+        return view("Admin.Shop.edit",['shop'=>$shop]);
     }
 
     /**
@@ -72,7 +100,13 @@ class ShopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //获取修改数据
+        $data=$request->except(['_token','_method']);
+        if(DB::table("shops")->where("id","=",$id)->update($data)){
+            return redirect("/adminshop")->with("success","修改成功");
+        }else{
+            return back()->with("error","修改失败");
+        }
     }
 
     /**

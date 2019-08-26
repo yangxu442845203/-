@@ -43,7 +43,7 @@
         		{{csrf_field()}}
         		{{method_field("DELETE")}}
 				<button class="btn btn-success" type="submit"><i class="icon-trash"></i></button>
-        		<a class="btn btn-info" href="/adminucates/{{$row->id}}/edit"><i class="icon-wrench"></i></a></td>
+        		<a class="btn btn-info" href="/admincates/{{$row->id}}/edit"><i class="icon-wrench"></i></a></td>
         	</form>
        </tr>
        @endforeach

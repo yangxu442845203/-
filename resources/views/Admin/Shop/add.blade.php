@@ -8,7 +8,7 @@
     <span>商品添加</span> 
    </div> 
    <div class="mws-panel-body no-padding"> 
-    <form class="mws-form" action="/adminuser" method="post" enctype="multipart/form-data"> 
+    <form class="mws-form" action="/adminshop" method="post" enctype="multipart/form-data"> 
      <div class="mws-form-inline"> 
       <div class="mws-form-row"> 
        <label class="mws-form-label">名字</label> 
@@ -37,7 +37,7 @@
         <div class="mws-form-row"> 
        <label class="mws-form-label">描述</label> 
        <div class="mws-form-item"> 
-        <input type="text" class="large"  name="descr" /> 
+        <textarea name="descr"></textarea>
        </div> 
       </div> 
         <div class="mws-form-row"> 

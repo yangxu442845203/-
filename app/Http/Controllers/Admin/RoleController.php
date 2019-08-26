@@ -61,7 +61,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        //加载添加页面
+        return view("Admin.Role.add");
     }
 
     /**
@@ -72,7 +73,17 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //数据入库
+        //dd($request->all());
+        $data=$request->except(['_token']);
+        //执行数据库的插入
+        if(DB::table("role")->insert($data)){
+        	//echo "ok";
+        	return redirect("/role")->with("success","添加成功");
+        }else{
+        	//echo "error";
+        	return back()->with("error","添加失败");
+        }
     }
 
     /**
@@ -94,7 +105,9 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        //获取需要修改的数据
+        $role=DB::table("role")->where("id","=",$id)->first();
+        return view("Admin.Role.edit",['role'=>$role]);
     }
 
     /**
@@ -106,7 +119,13 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //获取修改数据
+        $data=$request->except(['_token','_method']);
+        if(DB::table("role")->where("id","=",$id)->update($data)){
+            return redirect("/role")->with("success","修改成功");
+        }else{
+            return back()->with("error","修改失败");
+        }
     }
 
     /**
@@ -117,6 +136,11 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //角色删除
+        if(DB::table("role")->where("id","=",$id)->delete()){
+            return redirect("/role")->with("success","删除成功");
+        }else{
+            return back()->with("error","删除失败");
+        }
     }
 }

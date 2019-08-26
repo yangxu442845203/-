@@ -47,7 +47,7 @@
             <div class="login-links">
                 <label for="remember-me"><input id="remember-me" type="checkbox">记住密码</label>
                 <a href="/forget" class="am-fr">忘记密码</a>
-                <a href="register.html" class="zcnext am-fr am-btn-default">注册</a>
+                <a href="http://www.php217.com/homeregister/create" class="zcnext am-fr am-btn-default">注册</a>
                 <br />
             </div>
                 <div class="am-cf">

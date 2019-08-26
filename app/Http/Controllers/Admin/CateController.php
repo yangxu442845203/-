@@ -12,7 +12,7 @@ class CateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getCates(){
+    public static function getCates(){
         $cate = DB::table("cates")->select(DB::raw("*,concat(path,',',id)as paths"))->orderBy("paths")->get();
         //遍历
         foreach($cate as $key=>$value){
@@ -62,7 +62,7 @@ class CateController extends Controller
         //echo "ok";
         //获取所有分类
         // $cates = DB::table("cates")->get();
-        $cates =  $this->getCates();
+        $cates =self::getCates();
         //加载界面
         return view("Admin.Cate.add",['cates'=>$cates]);
     }
@@ -122,7 +122,9 @@ class CateController extends Controller
      */
     public function edit($id)
     {
-        //
+        //获取需要修改的数据
+        $cates=DB::table("cates")->where("id","=",$id)->first();
+        return view("Admin.Cate.edit",['cates'=>$cates]);
     }
 
     /**
@@ -134,7 +136,13 @@ class CateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        ////获取修改数据
+        $data=$request->except(['_token','_method']);
+        if(DB::table("cates")->where("id","=",$id)->update($data)){
+            return redirect("/admincates")->with("success","修改成功");
+        }else{
+            return back()->with("error","修改失败");
+        }
     }
 
     /**

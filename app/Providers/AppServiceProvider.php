@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //$cate=DB::table("cates")->get();
+        // dd($cate);
+        //把变量共享给每个视图
+        //view()->share('cate',$cate);
     }
 }

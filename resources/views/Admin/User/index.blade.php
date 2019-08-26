@@ -35,7 +35,7 @@
         <td class=" ">{{$row1->updated_at}}</td> 
         <td class=" ">
           <a href="/userinfo/{{$row1->id}}" class="btn btn-success">会员详情</a>
-          <a href="/useraddress/{{$row1->id}}" class="btn btn-success">收货地址</a>
+          <!-- <a href="/useraddress/{{$row1->id}}" class="btn btn-success">收货地址</a> -->
         	<form action="/adminuser/{{$row1->id}}" method="post">
         		{{csrf_field()}}
         		{{method_field("DELETE")}}
